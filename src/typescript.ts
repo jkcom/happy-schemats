@@ -36,8 +36,10 @@ export function generateTableInterface (tableNameRaw: string, tableDefinition: T
     const tableName = options.transformTypeName(tableNameRaw)
     let members = ''
     const forcedOptionals = ['id', 'createdAt', 'updatedAt']
-    Object.keys(tableDefinition).map(c => options.transformColumnName(c)).forEach((columnName) => {
-        members += `${columnName}${forcedOptionals.indexOf(columnName)!==-1 ? '?': ''}: ${tableName}Fields.${normalizeName(columnName, options)};\n`
+    Object.keys(tableDefinition).forEach((c) => {
+        var cVal = tableDefinition[c]
+        var columnName = options.transformColumnName(c)
+        members += `${columnName}${(forcedOptionals.indexOf(columnName)!==-1 || cVal.nullable) ? '?': ''}: ${tableName}Fields.${normalizeName(columnName, options)};\n`
     })
 
     return `

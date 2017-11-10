@@ -31,8 +31,10 @@ function generateTableInterface(tableNameRaw, tableDefinition, options) {
     var tableName = options.transformTypeName(tableNameRaw);
     var members = '';
     var forcedOptionals = ['id', 'createdAt', 'updatedAt'];
-    Object.keys(tableDefinition).map(function (c) { return options.transformColumnName(c); }).forEach(function (columnName) {
-        members += "" + columnName + (forcedOptionals.indexOf(columnName) !== -1 ? '?' : '') + ": " + tableName + "Fields." + normalizeName(columnName, options) + ";\n";
+    Object.keys(tableDefinition).forEach(function (c) {
+        var cVal = tableDefinition[c];
+        var columnName = options.transformColumnName(c);
+        members += "" + columnName + ((forcedOptionals.indexOf(columnName) !== -1 || cVal.nullable) ? '?' : '') + ": " + tableName + "Fields." + normalizeName(columnName, options) + ";\n";
     });
     return "\n        export interface " + normalizeName(tableName, options, true) + " {\n        " + members + "\n        }\n    ";
 }
