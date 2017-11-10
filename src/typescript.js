@@ -13,8 +13,13 @@ function nameIsReservedKeyword(name) {
     ];
     return reservedKeywords.indexOf(name) !== -1;
 }
-function normalizeName(name, options) {
-    return 'I' + _.capitalize(name).substr(0, (name.length - 1));
+function normalizeName(name, options, stripTrailingS) {
+    if (stripTrailingS === void 0) { stripTrailingS = false; }
+    var nameTemp = 'I' + _.capitalize(name);
+    if (stripTrailingS && nameTemp.charAt(nameTemp.length - 1) === 's') {
+        nameTemp = nameTemp.substr(0, (name.length - 1));
+    }
+    return nameTemp;
     /*
     if (nameIsReservedKeyword(name)) {
         return name + '_'
@@ -28,7 +33,7 @@ function generateTableInterface(tableNameRaw, tableDefinition, options) {
     Object.keys(tableDefinition).map(function (c) { return options.transformColumnName(c); }).forEach(function (columnName) {
         members += columnName + ": " + tableName + "Fields." + normalizeName(columnName, options) + ";\n";
     });
-    return "\n        export interface " + normalizeName(tableName, options) + " {\n        " + members + "\n        }\n    ";
+    return "\n        export interface " + normalizeName(tableName, options, true) + " {\n        " + members + "\n        }\n    ";
 }
 exports.generateTableInterface = generateTableInterface;
 function generateEnumType(enumObject, options) {
