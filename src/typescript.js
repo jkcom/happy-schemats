@@ -30,8 +30,9 @@ function normalizeName(name, options, stripTrailingS) {
 function generateTableInterface(tableNameRaw, tableDefinition, options) {
     var tableName = options.transformTypeName(tableNameRaw);
     var members = '';
+    var forcedOptionals = ['id', 'createdAt', 'updatedAt'];
     Object.keys(tableDefinition).map(function (c) { return options.transformColumnName(c); }).forEach(function (columnName) {
-        members += columnName + ": " + tableName + "Fields." + normalizeName(columnName, options) + ";\n";
+        members += "" + columnName + (forcedOptionals.indexOf(columnName) !== -1 ? '?' : '') + ": " + tableName + "Fields." + normalizeName(columnName, options) + ";\n";
     });
     return "\n        export interface " + normalizeName(tableName, options, true) + " {\n        " + members + "\n        }\n    ";
 }

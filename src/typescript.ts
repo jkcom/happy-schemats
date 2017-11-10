@@ -35,8 +35,9 @@ function normalizeName (name: string, options: Options, stripTrailingS:boolean=f
 export function generateTableInterface (tableNameRaw: string, tableDefinition: TableDefinition, options: Options) {
     const tableName = options.transformTypeName(tableNameRaw)
     let members = ''
+    const forcedOptionals = ['id', 'createdAt', 'updatedAt']
     Object.keys(tableDefinition).map(c => options.transformColumnName(c)).forEach((columnName) => {
-        members += `${columnName}: ${tableName}Fields.${normalizeName(columnName, options)};\n`
+        members += `${columnName}${forcedOptionals.indexOf(columnName)!==-1 ? '?': ''}: ${tableName}Fields.${normalizeName(columnName, options)};\n`
     })
 
     return `
