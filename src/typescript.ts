@@ -20,7 +20,7 @@ function nameIsReservedKeyword (name: string): boolean {
 function normalizeName (name: string, options: Options, stripTrailingS:boolean=false): string {
     var nameTemp: string = 'I' + _.capitalize(name)
     if (stripTrailingS && nameTemp.charAt(nameTemp.length - 1) === 's') {
-        nameTemp = nameTemp.substr(0, (name.length -1))
+        nameTemp = nameTemp.substr(0, (name.length))
     }
     
     return nameTemp
