@@ -18,11 +18,13 @@ function nameIsReservedKeyword (name: string): boolean {
 }
 
 function normalizeName (name: string, options: Options): string {
+    return 'I' + _.capitalize(name)
+    /*
     if (nameIsReservedKeyword(name)) {
         return name + '_'
     } else {
-        return name
     }
+    */
 }
 
 export function generateTableInterface (tableNameRaw: string, tableDefinition: TableDefinition, options: Options) {

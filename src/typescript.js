@@ -4,6 +4,7 @@
  * Created by xiamx on 2016-08-10.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require("lodash");
 function nameIsReservedKeyword(name) {
     var reservedKeywords = [
         'string',
@@ -13,12 +14,13 @@ function nameIsReservedKeyword(name) {
     return reservedKeywords.indexOf(name) !== -1;
 }
 function normalizeName(name, options) {
+    return 'I' + _.capitalize(name);
+    /*
     if (nameIsReservedKeyword(name)) {
-        return name + '_';
+        return name + '_'
+    } else {
     }
-    else {
-        return name;
-    }
+    */
 }
 function generateTableInterface(tableNameRaw, tableDefinition, options) {
     var tableName = options.transformTypeName(tableNameRaw);
