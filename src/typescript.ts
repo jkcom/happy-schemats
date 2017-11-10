@@ -17,8 +17,13 @@ function nameIsReservedKeyword (name: string): boolean {
     return reservedKeywords.indexOf(name) !== -1
 }
 
-function normalizeName (name: string, options: Options): string {
-    return 'I' + _.capitalize(name).substr(0, (name.length -1))
+function normalizeName (name: string, options: Options, stripTrailingS:boolean): string {
+    var nameTemp: string = 'I' + _.capitalize(name)
+    if (stripTrailingS && nameTemp.charAt(nameTemp.length - 1) === 's') {
+        nameTemp = nameTemp.substr(0, (name.length -1))
+    }
+    
+    return nameTemp
     /*
     if (nameIsReservedKeyword(name)) {
         return name + '_'
@@ -35,7 +40,7 @@ export function generateTableInterface (tableNameRaw: string, tableDefinition: T
     })
 
     return `
-        export interface ${normalizeName(tableName, options)} {
+        export interface ${normalizeName(tableName, options, true)} {
         ${members}
         }
     `
