@@ -18,7 +18,7 @@ function nameIsReservedKeyword (name: string): boolean {
 }
 
 function normalizeName (name: string, options: Options): string {
-    return 'I' + _.capitalize(name)
+    return 'I' + _.capitalize(name).substr(0, (name.length -1))
     /*
     if (nameIsReservedKeyword(name)) {
         return name + '_'

@@ -14,7 +14,7 @@ function nameIsReservedKeyword(name) {
     return reservedKeywords.indexOf(name) !== -1;
 }
 function normalizeName(name, options) {
-    return 'I' + _.capitalize(name);
+    return 'I' + _.capitalize(name).substr(0, (name.length - 1));
     /*
     if (nameIsReservedKeyword(name)) {
         return name + '_'
